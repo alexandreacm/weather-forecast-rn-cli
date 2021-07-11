@@ -37,7 +37,9 @@ export const Home = () => {
             weather,
             name,
           },
-        } = await api.get(`?lat=xxx&lon=xxx&units=metric&appid=${APP_ID}`);
+        } = await api.get(
+          `?lat=-29.9178&lon=-51.1836&units=metric&appid=fc769c0cf9cfa067109b56dc0e14eee3`,
+        );
 
         setDataWeather(weather);
         setDataMain(main);
