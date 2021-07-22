@@ -3,7 +3,7 @@ import { View, Text, Alert, ScrollView } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 
 import { Header } from '@/components/Header';
-import { theme } from '@/global/styles/colors';
+import { theme } from '@/global/styles/theme';
 
 import { Background } from '@/components/Background';
 import { CentralTemperature } from '@/components/CentralTemperature';
@@ -25,7 +25,7 @@ export const WeatherByCityName = () => {
 
   async function loadWeather() {
     try {
-      if (cityName != '') {
+      if (cityName !== '') {
         setLoading(true);
         const {
           data: {

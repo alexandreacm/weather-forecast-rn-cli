@@ -5,7 +5,7 @@ import { Home } from '@/screens/Home';
 import { WeatherByCityName } from '@/screens/WeatherByCityName';
 import { WeatherByZipCode } from '@/screens/WeatherByZipCode';
 
-import { theme } from '../../global/styles/colors';
+import { theme } from '../../global/styles/theme';
 
 const options = {
   activeTintColor: theme.colors.white,
@@ -26,8 +26,9 @@ const options = {
   },
 };
 
+const { Navigator, Screen } = createMaterialTopTabNavigator();
+
 export const MaterialTopTab = () => {
-  const { Navigator, Screen } = createMaterialTopTabNavigator();
   return (
     <Navigator tabBarOptions={options}>
       <Screen name='Home' component={Home} />

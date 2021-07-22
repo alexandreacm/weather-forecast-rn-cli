@@ -3,7 +3,7 @@ import { Image, Text } from 'react-native';
 import { LinearGradient } from 'react-native-linear-gradient';
 import PropTypes from 'prop-types';
 
-import { theme } from '@/global/styles/colors';
+import { theme } from '@/global/styles/theme';
 import { styles } from './styles';
 
 import Sun from '../../assets/sun.png';
@@ -23,7 +23,7 @@ export const CentralTemperature = ({
         style={styles.internalCircle}
         colors={[primaryBarColor, secondary30]}>
         <Image
-          source={mainWeather != 'Clouds' ? Sun : ''}
+          source={mainWeather !== 'Clouds' ? Sun : ''}
           style={styles.image}
           resizeMode='contain'
         />

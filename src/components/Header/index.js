@@ -7,7 +7,7 @@ import { BorderlessButton } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import { Feather, MaterialIcons } from 'react-native-vector-icons';
 
-import { theme } from '@/global/styles/colors';
+import { theme } from '@/global/styles/theme';
 import { styles } from './styles';
 
 export const Header = ({ title, action, showBackButton }) => {

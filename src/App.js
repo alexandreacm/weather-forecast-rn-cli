@@ -1,9 +1,7 @@
 import React from 'react';
+import { View, Text } from 'react-native';
 
-import { Routes } from '@/routes';
-import { Background } from '@/components/Background';
-
-import { theme } from '@/global/styles/colors';
+import { theme } from '@/global/styles/theme';
 
 import { StatusBarColor } from './components/StatusBarColor';
 
@@ -11,13 +9,15 @@ if (__DEV__) {
   import('@/config/reactotron');
 }
 
-export const App = () => {
+const App = () => {
   return (
     <>
       <StatusBarColor backgroundColor={theme.colors.primary} />
-      <Background>
-        <Routes />
-      </Background>
+      <View>
+        <Text>HOME</Text>
+      </View>
     </>
   );
 };
+
+export default App;

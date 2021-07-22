@@ -2,7 +2,7 @@ import React from 'react';
 import { LinearGradient } from 'react-native-linear-gradient';
 import PropTypes from 'prop-types';
 
-import { theme } from '@/global/styles/colors';
+import { theme } from '@/global/styles/theme';
 import { styles } from './styles';
 
 export const Background = ({ children }) => {

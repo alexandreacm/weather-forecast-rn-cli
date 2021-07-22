@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Alert, ScrollView } from 'react-native';
-//import * as Location from 'expo-location';
+import {
+  View,
+  Text,
+  Alert,
+  ScrollView,
+  PermissionsAndroid,
+} from 'react-native';
+import Geolocation from 'react-native-geolocation-service';
 
 import { Background } from '../../components/Background';
 import { Header } from '../../components/Header';
@@ -18,42 +24,83 @@ export const Home = () => {
   const [locationName, setLocationName] = useState('');
   const [dataMain, setDataMain] = useState();
   const [dataWeather, setDataWeather] = useState();
+  const [hasLocationPermission, setHasLocationPermission] = useState(false);
+  const [userPosition, setUserPosition] = useState(false);
+
+  const verifyLocationPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      );
+
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        Alert.alert('permission granted');
+        setHasLocationPermission(true);
+      } else {
+        Alert.alert('permission denied');
+        setHasLocationPermission(false);
+      }
+    } catch (err) {
+      Alert.alert(err);
+    }
+  };
+
+  const loadingLocation = async () => {
+    try {
+      const {
+        data: {
+          main,
+          sys: { country },
+          weather,
+          name,
+        },
+      } = await api.get(
+        `?lat=-29.9178&lon=-51.1836&units=metric&appid=fc769c0cf9cfa067109b56dc0e14eee3`,
+      );
+
+      setDataWeather(weather);
+      setDataMain(main);
+      setLocationName(`${name}, ${country}`);
+    } catch (error) {
+      setErrorMsg(error);
+    }
+  };
+
+  useEffect(() => {
+    verifyLocationPermission();
+
+    if (hasLocationPermission) {
+      Geolocation.getCurrentPosition(
+        position => {
+          setUserPosition({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        },
+        error => {
+          Alert.alert(error.code, error.message);
+        },
+      );
+    }
+  }, [hasLocationPermission]);
 
   useEffect(() => {
     (async () => {
-      /*let { status } = await Location.requestForegroundPermissionsAsync();
-            if (status !== 'granted') {
-                setErrorMsg('Permission to access location was denied');
-                return;
-            }*/
-
-      //const location: Location.LocationObject = await Location.getCurrentPositionAsync({});
-
-      try {
-        const {
-          data: {
-            main,
-            sys: { country },
-            weather,
-            name,
-          },
-        } = await api.get(
-          `?lat=-29.9178&lon=-51.1836&units=metric&appid=fc769c0cf9cfa067109b56dc0e14eee3`,
-        );
-
-        setDataWeather(weather);
-        setDataMain(main);
-        setLocationName(`${name}, ${country}`);
-      } catch (error) {
-        Alert.alert(error);
-      }
+      await loadingLocation();
     })();
-  }, []);
+  }, [hasLocationPermission]);
 
   return (
     <Background>
       <ScrollView>
         <Header title={locationName || 'No Address'} />
+
+        <View style={{ backgroundColor: '#FFCCCC' }}>
+          <Text>Latitude: {userPosition.latitude}</Text>
+          <Text>Longitude: {userPosition.longitude}</Text>
+          <Text>{APP_ID}</Text>
+        </View>
+
         {errorMsg !== '' && (
           <View style={styles.errorMsg}>
             <Text style={styles.errorMsgText}>{errorMsg}</Text>

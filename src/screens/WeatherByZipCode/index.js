@@ -10,7 +10,7 @@ import { SpecificTemperature } from '@/components/SpecificTemperature';
 import { FooterTemperature } from '@/components/FooterTemperature';
 
 import { Header } from '@/components/Header';
-import { theme } from '@/global/styles/colors';
+import { theme } from '@/global/styles/theme';
 
 import { styles } from './styles';
 import { api } from '../../services/api';
